@@ -1,0 +1,53 @@
+<div class="carousel">
+  <div class="carousel-image">1</div>
+  <div class="carousel-image">2</div>
+  <div class="carousel-image">3</div>
+  <!-- Add more carousel items as needed -->
+</div>
+
+<style>
+  .carousel {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    perspective: 800px;
+    user-select: none;
+    cursor: grab;
+  }
+
+  .carousel-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -100px 0 0 -100px;
+    width: 200px;
+    height: 200px;
+    transform: translate3d(0, 0, -10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    transform-origin: 50% 50%;
+  }
+</style>
+
+<script>
+  var images = document.querySelectorAll('.carousel-image');
+  var radius = 242;
+  var progress = { value: 0 };
+
+  function animate() {
+    images.forEach((image, index) => {
+      var theta = index / images.length - progress.value;
+      var x = -Math.sin(theta * Math.PI * 2) * radius;
+      var y = Math.cos(theta * Math.PI * 2) * radius;
+      image.style.transform = `translate3d(${x}px, 0px, ${y}px) rotateY(${360 * -theta}deg)`;
+      var c = Math.floor((index / images.length) * 360);
+      image.style.background = `hsla(${c}, 90%, 50%, .5)`;
+    });
+  }
+
+  gsap.ticker.add(animate);
+</script>
